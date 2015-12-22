@@ -10,11 +10,10 @@ module Integration where
 -- Формула Котеса: h * ((f(a) + f(n)) / 2) + sum(f(1)..f(n-1))
 integration :: (Double -> Double) -> Double -> Double -> Double
 integration f a b | a < b = helper f a b
-                  | a > b = helper f b a
+                  | a > b = -(abs (helper f b a))
                   | otherwise = 0
     where
--- TODO: переделать, ошибка на inregration id 0 1
-        helper fun a b = h * ((fun a + fun n) / 2 + sum (map fun [a+1*h,a+2*h..a+(n-1)*h])) where
+        helper fun a b = h * ((fun a + fun (n*h)) / 2 + sum (map fun [a+h,a+2*h..a+(n-1)*h])) where
             n = 1000
             h = (b - a) / n
 
